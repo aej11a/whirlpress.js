@@ -18,7 +18,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const siteData = await WpSdk.getSiteData();
-  console.log(siteData);
 
   return (
     <html lang="en">
@@ -26,7 +25,7 @@ export default async function RootLayout({
         className={inter.className + " container mx-auto"}
         style={{ backgroundColor: "rgb(235 235 235)" }}
       >
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href={siteData.icon.ico} sizes="any" />
         <div className="nav mt-4">
           <Link href="/">
             <Image
