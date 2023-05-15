@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "myblog2700.files.wordpress.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "secure.gravatar.com",
+        port: "",
+      },
     ],
   },
 };

@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export default async function Home() {
   const postsResponse = await WpSdk.getPosts();
-  const siteData = await WpSdk.getSiteData();
   return (
     <main className="flex min-h-screen flex-col">
       {postsResponse.posts.map((post) => (

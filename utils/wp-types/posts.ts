@@ -39,7 +39,7 @@ export interface Post {
   publicize_URLs: any[];
   terms: Terms;
   tags: Tags;
-  categories: Categories;
+  categories: PostCategories;
   attachments: Attachments;
   attachment_count: number;
   metadata: Metadaum[];
@@ -71,14 +71,10 @@ export interface Discussion {
 }
 
 export interface Terms {
-  category: Category;
+  category: PostCategory;
   post_tag: PostTag;
   post_format: PostFormat;
   mentions: Mentions;
-}
-
-export interface Category {
-  Uncategorized: Uncategorized;
 }
 
 export interface Uncategorized {
@@ -101,19 +97,30 @@ export interface Links {
   site: string;
 }
 
-export interface PostTag {}
+export interface PostTag {
+  ID: number;
+  name: string;
+  slug: string;
+  description: string;
+  post_count: number;
+  feed_url: string;
+  parent: number;
+  meta: Meta;
+}
 
 export interface PostFormat {}
 
 export interface Mentions {}
 
-export interface Tags {}
-
-export interface Categories {
-  Uncategorized: Uncategorized2;
+export interface Tags {
+  [tagName: string]: PostTag;
 }
 
-export interface Uncategorized2 {
+export interface PostCategories {
+  [categoryName: string]: PostCategory;
+}
+
+export interface PostCategory {
   ID: number;
   name: string;
   slug: string;
