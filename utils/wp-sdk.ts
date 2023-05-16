@@ -2,8 +2,7 @@ import { Category } from "./wp-types/category";
 import { Post, PostsResponse, PostTag } from "./wp-types/posts";
 import { SiteData } from "./wp-types/site-data";
 
-const wpEndpoint =
-  "https://public-api.wordpress.com/rest/v1.1/sites/myblog2700.wordpress.com/";
+const wpEndpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL!;
 
 const getSiteData = async (args?: { cache?: RequestInit["cache"] }) => {
   const cache = args?.cache;
