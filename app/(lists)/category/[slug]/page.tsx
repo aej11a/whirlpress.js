@@ -1,5 +1,29 @@
 import { WpSdk } from "@/utils/wp-sdk";
+import type { Metadata } from "next/types";
 import Link from "next/link";
+import { PostInfo } from "@/components/PostInfo";
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug;
+  const [siteData, category] = await Promise.all([
+    WpSdk.getSiteData,
+    WpSdk.getCategory(slug),
+  ]);
+  return {
+    title: `${category.name} | ${siteData.name}`,
+  };
+}
+
+export async function generateStaticParams() {
+  const categoriesList = await WpSdk.getCategories();
+
+  return categoriesList.categories.map((category) => ({
+    slug: category.slug,
+  }));
+}
 
 export default async function Category({
   params,
@@ -15,7 +39,8 @@ export default async function Category({
   return (
     <div>
       <h1 className="text-4xl font-bold mb-8 border-b border-b-black pb-4">
-        Category: {category.name}
+        Category: <br className="md:hidden" />
+        {category.name}
       </h1>
       <div className="flex flex-col">
         {posts.posts.map((post) => (
@@ -23,6 +48,7 @@ export default async function Category({
             <Link href={`/posts/${post.slug}`}>
               <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
             </Link>
+            <PostInfo post={post} />
             <span
               className="text-gray-500 mb-5"
               dangerouslySetInnerHTML={{ __html: post.excerpt }}
@@ -33,29 +59,3 @@ export default async function Category({
     </div>
   );
 }
-
-// render the date with styles, and the modified date if it's not the same
-const PostDates = ({ date, modified }: { date: Date; modified: Date }) => (
-  <div className="text-gray-500 mb-5">
-    <span className="mr-2">
-      {date.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })}
-    </span>
-    {date.getTime() !== modified.getTime() && (
-      <span className="mr-2 italic">
-        (modified{" "}
-        {modified.toLocaleDateString("en-US", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-        )
-      </span>
-    )}
-  </div>
-);

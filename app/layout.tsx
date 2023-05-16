@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={inter.className + " container mx-auto px-24"}
+        className={inter.className + " container mx-auto px-4 md:px-18 lg:px-24"}
         style={{ backgroundColor: "rgb(235 235 235)" }}
       >
         {siteData.icon.ico && (
@@ -39,7 +39,9 @@ export default async function RootLayout({
                 className="inline-block mb-5"
               />
             )}
-            <h1 className="text-xl font-bold inline-block ml-2">{siteData.name}</h1>
+            <h1 className="text-xl font-bold inline-block ml-2">
+              {siteData.name}
+            </h1>
           </Link>
         </div>
         <div className="px-4">{children}</div>

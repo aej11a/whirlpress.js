@@ -4,9 +4,9 @@ export default async function PostsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
-      <div style={{ flex: 2 }}>{children}</div>
-      <div style={{ flex: 1 }}></div>
+    <div className="block lg:flex">
+      <div className="lg:w-3/4">{children}</div>
+      <div className="lg:w-1/4"></div>
     </div>
   );
 }
