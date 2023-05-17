@@ -18,6 +18,7 @@ const getSiteData = async (args?: { cache?: RequestInit["cache"] }) => {
 const getPosts = async (args?: {
   category?: string;
   tag?: string;
+  search?: string;
   cache?: RequestInit["cache"];
 }) => {
   const category = args?.category;
@@ -27,6 +28,8 @@ const getPosts = async (args?: {
     urlEnding = `&category=${category}`;
   } else if (tag) {
     urlEnding = `&tag=${tag}`;
+  } else if (args?.search) {
+    urlEnding = `&search=${args.search}`;
   }
 
   // fetch posts
@@ -88,7 +91,7 @@ const getTags = async (cache?: RequestInit["cache"]) => {
   const tagsResponse = (await res.json()) as {
     found: number;
     tags: PostTag[];
-  }
+  };
   return tagsResponse;
 };
 

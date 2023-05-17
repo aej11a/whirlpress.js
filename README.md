@@ -31,11 +31,12 @@ NEXT_PUBLIC_WORDPRESS_API_URL=https://public-api.wordpress.com/rest/v1.1/sites/m
 
 - Sidebar with popular or recent posts
 - Native WP Menus
-- Post stats
+- Post stats (views, likes, comments)
 - Sitemap
-- Search
+- Search ✅
 - Comments
 - Authors page
 - RSS
 - Optional OAuth sign-in support for submitting comments
-- Nicer font :D
+- Revalidation settings + ISR endpoint
+- Nicer fonts :D
