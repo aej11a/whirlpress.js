@@ -1,12 +1,14 @@
 # Headless Wordpress Starter Kit using RSC in Next.js 13
 
-A highly-performant headless starter kit for Wordpress.com and Jetpack sites, using React Server Components in Next.js 13.
+A highly-performant headless starter kit for Wordpress.com or Wordpress w/ Jetpack sites, using React Server Components in Next.js 13.
 
 - Automatically adopts Wordpress site icon and name
 - Routes setup mimicks native Wordpress pages for easier migration, plus additional routes
 - Most pages are entirely built with Server Components, minimal client-side JS
 - Simple theme, easy to customize
 - Built-in SEO including OG tags, dynamic OG images, and Structured Data for posts
+
+**Note**: This can be used for production today but is missing some recommended features like a sitemap and search. See the roadmap below.
 
 ## Getting Started
 
@@ -27,7 +29,13 @@ NEXT_PUBLIC_WORDPRESS_API_URL=https://public-api.wordpress.com/rest/v1.1/sites/m
 
 ## Roadmap
 
+- Sidebar with popular or recent posts
+- Native WP Menus
+- Post stats
 - Sitemap
 - Search
 - Comments
-- OAuth sign-in support for submitting comments
+- Authors page
+- RSS
+- Optional OAuth sign-in support for submitting comments
+- Nicer font :D

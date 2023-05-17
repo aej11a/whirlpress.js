@@ -3,9 +3,11 @@ import type { Metadata } from "next/types";
 import Link from "next/link";
 import { PostInfo } from "@/components/PostInfo";
 
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   // read route params
   const slug = params.slug;
   const [siteData, category] = await Promise.all([
@@ -14,6 +16,15 @@ export async function generateMetadata(
   ]);
   return {
     title: `${category.name} | ${siteData.name}`,
+    twitter: {
+      card: "summary_large_image",
+      title: `${category.name} | ${siteData.name}`,
+      description: category.description,
+    },
+    openGraph: {
+      title: `${category.name} | ${siteData.name}`,
+      description: category.description,
+    },
   };
 }
 
