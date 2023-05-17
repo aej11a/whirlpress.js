@@ -4,9 +4,11 @@ import { PostDates } from "@/components/PostDates";
 import Link from "next/link";
 import { PostInfo } from "@/components/PostInfo";
 
-export async function generateMetadata(
-  { params }: { params: { slug: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   // read route params
   const slug = params.slug;
   const [siteData, tag] = await Promise.all([
@@ -15,6 +17,15 @@ export async function generateMetadata(
   ]);
   return {
     title: `${tag.name} | ${siteData.name}`,
+    twitter: {
+      card: "summary_large_image",
+      title: `${tag.name} | ${siteData.name}`,
+      description: tag.description,
+    },
+    openGraph: {
+      title: `${tag.name} | ${siteData.name}`,
+      description: tag.description,
+    },
   };
 }
 

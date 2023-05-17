@@ -9,10 +9,7 @@ export const contentType = "image/png";
 export const runtime = "edge";
 
 export default async function og({ params }: { params: { slug: string } }) {
-  const [post, siteData] = await Promise.all([
-    WpSdk.getPostBySlug(params.slug),
-    WpSdk.getSiteData(),
-  ]);
+  const siteData = await WpSdk.getSiteData();
   return new ImageResponse(
     (
       <div
@@ -37,23 +34,6 @@ export default async function og({ params }: { params: { slug: string } }) {
         >
           {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img src={siteData.icon.img} alt="logo" width={200} height={200} />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 75,
-            fontStyle: "normal",
-            color: "black",
-            whiteSpace: "pre-wrap",
-            marginLeft: 20,
-            marginRight: 20,
-          }}
-        >
-          <p style={{ fontWeight: "bolder", fontFamily: "Times New Roman" }}>
-            {post.title}
-            {"\n"}
-            {siteData.name}
-          </p>
         </div>
       </div>
     ),

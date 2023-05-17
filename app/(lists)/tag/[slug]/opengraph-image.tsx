@@ -1,7 +1,6 @@
 import { WpSdk } from "@/utils/wp-sdk";
 import { ImageResponse } from "next/server";
 
-export const alt = "About Acme";
 export const size = {
   width: 1200,
   height: 630,
