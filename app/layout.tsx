@@ -8,7 +8,7 @@ import { SearchBar } from "@/components/SearchBar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Broadsheet.js Demo",
+  title: "WhirlPress.js Demo",
   description: "Open source headless frontend for WordPress",
 };
 
