@@ -3,16 +3,18 @@ import type { Metadata } from "next/types";
 import { PostsList } from "@/app/(lists)/PostsList";
 import { notFound, redirect } from "next/navigation";
 
+type TagPagesParams = { slug: string; pageNum?: string[] };
+
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; pageNum: string };
+  params: TagPagesParams;
 }): Promise<Metadata> {
   // read route params
   const slug = params.slug;
-  const pageNum = parseInt(params.pageNum);
+  const pageNum = params.pageNum ? parseInt(params.pageNum[0]) : 1;
   const [siteData, tag] = await Promise.all([
-    WpSdk.getSiteData,
+    WpSdk.getSiteData(),
     WpSdk.getTag(slug),
   ]);
   return {
@@ -30,18 +32,30 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const categoriesList = await WpSdk.getCategories();
+  const tagPagesParams: TagPagesParams[] = [];
+  const firstListOfTags = await WpSdk.getTags();
+  const tagPromises = firstListOfTags.tags.map(
+    async (tag) => {
+      console.log("TAGGGGGG", tag)
+      // get the posts for this tag and use .found to calculate the number of pages
+      const tagPosts = await WpSdk.getPosts({ tag: tag.slug });
+      const numberOfPages = Math.ceil(tagPosts.found / WpSdk.PAGE_SIZE);
+      // add a page for each page of posts
+      for (let i = 1; i <= numberOfPages; i++) {
+        tagPagesParams.push({
+          slug: tag.slug,
+          pageNum: i === 1 ? undefined : [i.toString()],
+        });
+      }
+    }
+  );
 
-  return categoriesList.categories.map((tag) => ({
-    slug: tag.slug,
-  }));
+  await Promise.all(tagPromises);
+  console.log(tagPagesParams)
+  return tagPagesParams;
 }
 
-export default async function tag({
-  params,
-}: {
-  params: { slug: string; pageNum?: string[] };
-}) {
+export default async function tag({ params }: { params: TagPagesParams }) {
   let pageNumber = 1;
   if (params.pageNum) {
     if (params.pageNum.length > 1) notFound();

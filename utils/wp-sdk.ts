@@ -61,18 +61,24 @@ const getPostBySlug = async (slug: string, cache?: RequestInit["cache"]) => {
 
 const getCategory = async (slug: string, cache?: RequestInit["cache"]) => {
   const res = await fetch(`${wpEndpoint}categories/slug:${slug}`, {
-    // cache most requests for 60 seconds
     next: { revalidate: cache === "no-cache" ? 0 : 60 },
   });
   const category = (await res.json()) as Category;
   return category;
 };
 
-const getCategories = async (cache?: RequestInit["cache"]) => {
-  const res = await fetch(`${wpEndpoint}categories`, {
-    // cache most requests for 60 seconds
-    next: { revalidate: cache === "no-cache" ? 0 : 60 },
-  });
+const getCategories = async (args?: {
+  currentPage?: number;
+  cache?: RequestInit["cache"];
+}) => {
+  const res = await fetch(
+    `${wpEndpoint}categories${
+      args?.currentPage ? `?page=${args.currentPage}` : ""
+    }`,
+    {
+      next: { revalidate: args?.cache === "no-cache" ? 0 : 60 },
+    }
+  );
   const categoriesResult = (await res.json()) as {
     found: number;
     categories: Category[];
@@ -82,18 +88,22 @@ const getCategories = async (cache?: RequestInit["cache"]) => {
 
 const getTag = async (slug: string, cache?: RequestInit["cache"]) => {
   const res = await fetch(`${wpEndpoint}tags/slug:${slug}`, {
-    // cache most requests for 60 seconds
     next: { revalidate: cache === "no-cache" ? 0 : 60 },
   });
   const tag = (await res.json()) as PostTag;
   return tag;
 };
 
-const getTags = async (cache?: RequestInit["cache"]) => {
-  const res = await fetch(`${wpEndpoint}tags`, {
-    // cache most requests for 60 seconds
-    next: { revalidate: cache === "no-cache" ? 0 : 60 },
-  });
+const getTags = async (args?: {
+  currentPage?: number;
+  cache?: RequestInit["cache"];
+}) => {
+  const res = await fetch(
+    `${wpEndpoint}tags${args?.currentPage ? `?page=${args.currentPage}` : ""}`,
+    {
+      next: { revalidate: args?.cache === "no-cache" ? 0 : 60 },
+    }
+  );
   const tagsResponse = (await res.json()) as {
     found: number;
     tags: PostTag[];

@@ -2,6 +2,16 @@ import { WpSdk } from "@/utils/wp-sdk";
 import { notFound, redirect } from "next/navigation";
 import { PostsList } from "../PostsList";
 
+export async function generateStaticParams() {
+  const postsResponse = await WpSdk.getPosts({ currentPage: 1 });
+  const totalPages = Math.ceil(postsResponse.found / WpSdk.PAGE_SIZE);
+  const params = [{}];
+  for (let i = 2; i <= totalPages; i++) {
+    params.push({ homePageNum: ["page", i.toString()] });
+  }
+  return params;
+}
+
 export default async function Home({
   params,
 }: {

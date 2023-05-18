@@ -5,14 +5,16 @@ import { PostInfo } from "@/components/PostInfo";
 import { PostsList } from "@/app/(lists)/PostsList";
 import { notFound, redirect } from "next/navigation";
 
+type CategoryPagesParams = { slug: string; pageNum?: string[] };
+
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; pageNum?: string };
+  params: CategoryPagesParams;
 }): Promise<Metadata> {
   // read route params
   const slug = params.slug;
-  const pageNum = params.pageNum ? parseInt(params.pageNum) : 1;
+  const pageNum = params.pageNum ? parseInt(params.pageNum[0]) : 1;
   const [siteData, category] = await Promise.all([
     WpSdk.getSiteData,
     WpSdk.getCategory(slug),
@@ -32,17 +34,31 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const categoriesList = await WpSdk.getCategories();
+  const categoryPagesParams: CategoryPagesParams[] = [];
+  const firstListOfCategories = await WpSdk.getCategories();
+  const categoryPromises = firstListOfCategories.categories.map(
+    async (category) => {
+      // get the posts for this category and use .found to calculate the number of pages
+      const categoryPosts = await WpSdk.getPosts({ category: category.slug });
+      const numberOfPages = Math.ceil(categoryPosts.found / WpSdk.PAGE_SIZE);
+      // add a page for each page of posts
+      for (let i = 1; i <= numberOfPages; i++) {
+        categoryPagesParams.push({
+          slug: category.slug,
+          pageNum: i === 1 ? undefined : [i.toString()],
+        });
+      }
+    }
+  );
 
-  return categoriesList.categories.map((category) => ({
-    slug: category.slug,
-  }));
+  await Promise.all(categoryPromises);
+  return categoryPagesParams;
 }
 
 export default async function Category({
   params,
 }: {
-  params: { slug: string; pageNum?: string[] };
+  params: CategoryPagesParams;
 }) {
   const slug = params.slug;
 
