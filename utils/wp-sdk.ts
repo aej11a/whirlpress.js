@@ -2,7 +2,7 @@ import { Category } from "./wp-types/category";
 import { Post, PostsResponse, PostTag } from "./wp-types/posts";
 import { SiteData } from "./wp-types/site-data";
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 5;
 
 const wpEndpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL!;
 
