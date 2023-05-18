@@ -44,3 +44,5 @@ NEXT_PUBLIC_WORDPRESS_API_URL=https://public-api.wordpress.com/rest/v1.1/sites/m
 - Optional OAuth sign-in support for submitting comments
 - Revalidation settings + ISR endpoint
 - Nicer fonts :D
+
+**Note**: This project is not affiliated with Wordpress.com, Automattic, or Jetpack.
