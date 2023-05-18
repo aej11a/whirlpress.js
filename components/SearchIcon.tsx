@@ -4,8 +4,8 @@ export const SearchIcon = () => (
     fill="#000000"
     version="1.1"
     id="Capa_1"
-    width="30px"
-    height="30px"
+    width="24px"
+    height="24px"
     viewBox="0 0 592.709 592.709"
   >
     <g>
