@@ -1,6 +1,8 @@
 # WhirlPress.js
 
-![Tornado logo](public/whirlpress_logo.png)
+<p align="center">
+  <img width="460" height="300" src="public/whirlpress_logo.png">
+</p>
 
 ## Headless Wordpress Starter Kit using RSC in Next.js 13
 
