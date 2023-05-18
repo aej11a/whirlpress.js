@@ -2,6 +2,8 @@ import { Category } from "./wp-types/category";
 import { Post, PostsResponse, PostTag } from "./wp-types/posts";
 import { SiteData } from "./wp-types/site-data";
 
+const PAGE_SIZE = 2;
+
 const wpEndpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL!;
 
 const getSiteData = async (args?: { cache?: RequestInit["cache"] }) => {
@@ -19,22 +21,26 @@ const getPosts = async (args?: {
   category?: string;
   tag?: string;
   search?: string;
+  currentPage?: number;
+  pageSize?: number;
   cache?: RequestInit["cache"];
 }) => {
   const category = args?.category;
   const tag = args?.tag;
-  let urlEnding = "";
+  let filter = "?";
   if (category) {
-    urlEnding = `&category=${category}`;
+    filter += `category=${category}&`;
   } else if (tag) {
-    urlEnding = `&tag=${tag}`;
+    filter += `tag=${tag}&`;
   } else if (args?.search) {
-    urlEnding = `&search=${args.search}`;
+    filter += `search=${args.search}&`;
   }
 
   // fetch posts
   const res = await fetch(
-    `${wpEndpoint}posts?_embed=true&per_page=5${urlEnding}`,
+    `${wpEndpoint}posts${filter}page=${
+      args?.currentPage || 1
+    }&number=${PAGE_SIZE}`,
     {
       // cache most requests for 60 seconds
       next: { revalidate: args?.cache === "no-cache" ? 0 : 60 },
@@ -96,6 +102,7 @@ const getTags = async (cache?: RequestInit["cache"]) => {
 };
 
 export const WpSdk = {
+  PAGE_SIZE,
   getSiteData,
   getPosts,
   getPostBySlug,
