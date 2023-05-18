@@ -1,10 +1,8 @@
-# WhirlPress.js
+# WhirlPress.js: Headless Wordpress Starter Kit using RSC in Next.js 13
 
 <p align="center">
   <img height="300" src="public/whirlpress_logo.png">
 </p>
-
-## Headless Wordpress Starter Kit using RSC in Next.js 13
 
 A highly-performant headless starter kit for Wordpress.com or Wordpress w/ Jetpack sites, using React Server Components in Next.js 13.
 
