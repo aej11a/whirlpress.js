@@ -16,7 +16,7 @@ export async function generateMetadata({
   const slug = params.slug;
   const pageNum = params.pageNum ? parseInt(params.pageNum[0]) : 1;
   const [siteData, category] = await Promise.all([
-    WpSdk.getSiteData,
+    WpSdk.getSiteData(),
     WpSdk.getCategory(slug),
   ]);
   return {

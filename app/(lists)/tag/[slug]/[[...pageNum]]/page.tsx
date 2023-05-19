@@ -36,7 +36,6 @@ export async function generateStaticParams() {
   const firstListOfTags = await WpSdk.getTags();
   const tagPromises = firstListOfTags.tags.map(
     async (tag) => {
-      console.log("TAGGGGGG", tag)
       // get the posts for this tag and use .found to calculate the number of pages
       const tagPosts = await WpSdk.getPosts({ tag: tag.slug });
       const numberOfPages = Math.ceil(tagPosts.found / WpSdk.PAGE_SIZE);
@@ -51,7 +50,6 @@ export async function generateStaticParams() {
   );
 
   await Promise.all(tagPromises);
-  console.log(tagPagesParams)
   return tagPagesParams;
 }
 
