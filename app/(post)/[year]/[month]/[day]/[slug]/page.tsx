@@ -16,9 +16,9 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams() {
-  const tagsList = await WpSdk.getPosts();
+  const postsList = await WpSdk.getPosts();
 
-  return tagsList.posts.map((post) => ({
+  return postsList.posts.map((post) => ({
     slug: post.slug,
     year: new Date(post.date).getFullYear().toString(),
     month: (new Date(post.date).getMonth() + 1).toString(),
