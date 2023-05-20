@@ -8,7 +8,7 @@ export const PostDates = ({
   modified?: Date;
   inline?: boolean;
 }) => (
-  <div className={`text-gray-500 mb-5 ${inline ? "inline" : ""}`}>
+  <div className={`text-gray-700 mb-5 ${inline ? "inline" : ""}`}>
     <span className="mr-2">
       {date.toLocaleDateString("en-US", {
         weekday: "long",

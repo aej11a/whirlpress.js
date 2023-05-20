@@ -74,7 +74,7 @@ export const PostsList = (props: PostsListProps) => {
           </Link>
           <PostInfo post={post} />
           <span
-            className="text-gray-500 mb-5"
+            className="text-gray-700 mb-5"
             dangerouslySetInnerHTML={{ __html: post.excerpt }}
           />
         </div>
